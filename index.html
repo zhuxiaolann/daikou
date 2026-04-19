@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,40 +7,42 @@
 </head>
 <body>
 
-  <h1>代購サービス</h1>
+<h1>代購サービス</h1>
 
-  <input id="linkInput" placeholder="1688リンクを貼り付け" style="width:300px;">
-  <br><br>
-  <button onclick="submitData()">取得</button>
+<input id="linkInput" style="width:300px;" placeholder="1688リンクを貼り付け">
+<br><br>
+<button onclick="submitData()">取得</button>
 
-  <script type="module">
-    // 确保只声明一次
-    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
-    const supabase = createClient(
-      "https://cqiglrncwircuyuhtxgp.supabase.co",  // 填入你的 Supabase URL
-      "sb_publishable_uerGfSIuVBhNTn_jX9p4fw_MFeBIG-1"  // 填入你的 Supabase API Key
-    );
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-    window.submitData = async function () {
-      const link = document.getElementById("linkInput").value;
+  // ⚠️ 这里只能有一次！
+  const supabase = createClient(
+    "https://cqiglrncwircuyuhtxgp.supabase.co",
+    "sb_publishable_uerGfSIuVBhNTn_jX9p4fw_MFeBIG-1"
+  )
 
-      if (!link) {
-        alert("请输入链接");
-        return;
-      }
+  // ⚠️ 必须挂到 window，否则按钮找不到
+  window.submitData = async function () {
+    const link = document.getElementById("linkInput").value
 
-      const { error } = await supabase
-        .from("orders")
-        .insert([{ link: link }]);
-
-      if (error) {
-        alert("失败");
-        console.log(error);
-      } else {
-        alert("成功！");
-      }
+    if (!link) {
+      alert("请输入链接")
+      return
     }
-  </script>
+
+    const { error } = await supabase
+      .from("orders")
+      .insert([{ link: link }])
+
+    if (error) {
+      console.log(error)
+      alert("失败")
+    } else {
+      alert("成功！")
+    }
+  }
+</script>
 
 </body>
 </html>
