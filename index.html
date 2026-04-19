@@ -16,22 +16,27 @@
 
   <script>
     const supabase = window.supabase.createClient(
-      "https://cqiglrncwircuyuhtxgp.supabase.co",
-      "sb_publishable_uerGfSIuVBhNTn_jX9p4fw_MFeBIG-1"
+      "https://cqiglrncwircuyuhtxgp.supabase.co", // 填入你的 Supabase URL
+      "sb_publishable_uerGfSIuVBhNTn_jX9p4fw_MFeBIG-1" // 填入你的 Supabase API Key
     );
 
     async function submitData() {
       const link = document.getElementById("linkInput").value;
+      
+      if (!link) {
+        alert("请先输入 1688 URL");
+        return;
+      }
 
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("orders")
         .insert([{ link: link }]);
 
       if (error) {
-        alert("失败");
+        alert("提交失败，请检查 URL 或稍后再试");
         console.log(error);
       } else {
-        alert("成功！");
+        alert("提交成功！");
       }
     }
   </script>
