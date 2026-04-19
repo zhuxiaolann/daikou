@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>代購サービス</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto; }
+    input, button { padding: 10px; margin-top: 10px; width: 100%; }
+    .card { border: 1px solid #ddd; padding: 15px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<h2>代購サービス</h2>
+
+<input id="link" placeholder="1688リンクを貼り付け">
+<button onclick="loadProduct()">取得</button>
+
+<div id="product"></div>
+
+<script>
+function loadProduct() {
+  const product = {
+    title: "サンプル商品",
+    price: 100
+  };
+
+  const fee = product.price * 0.05;
+
+  document.getElementById("product").innerHTML = `
+    <div class="card">
+      <h3>${product.title}</h3>
+      <p>商品価格: ¥${product.price}</p>
+      <p>手数料: ¥${fee}</p>
+      <p><b>合計: ¥${product.price + fee}</b></p>
+      <button onclick="order()">注文する</button>
+    </div>
+  `;
+}
+
+function order() {
+  alert("注文完了（テスト）");
+}
+</script>
+
+</body>
+</html>
