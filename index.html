@@ -12,31 +12,31 @@
   <br><br>
   <button onclick="submitData()">取得</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script>
-    const supabase = window.supabase.createClient(
-      "https://cqiglrncwircuyuhtxgp.supabase.co", // 填入你的 Supabase URL
-      "sb_publishable_uerGfSIuVBhNTn_jX9p4fw_MFeBIG-1" // 填入你的 Supabase API Key
+  <script type="module">
+    // 确保只声明一次
+    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+    const supabase = createClient(
+      "https://cqiglrncwircuyuhtxgp.supabase.co",  // 填入你的 Supabase URL
+      "sb_publishable_uerGfSIuVBhNTn_jX9p4fw_MFeBIG-1"  // 填入你的 Supabase API Key
     );
 
-    async function submitData() {
+    window.submitData = async function () {
       const link = document.getElementById("linkInput").value;
-      
+
       if (!link) {
-        alert("请先输入 1688 URL");
+        alert("请输入链接");
         return;
       }
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("orders")
         .insert([{ link: link }]);
 
       if (error) {
-        alert("提交失败，请检查 URL 或稍后再试");
+        alert("失败");
         console.log(error);
       } else {
-        alert("提交成功！");
+        alert("成功！");
       }
     }
   </script>
